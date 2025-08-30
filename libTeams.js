@@ -1,3 +1,4 @@
+
 const soccer = (() => {
 
 const STORAGE_KEY = "liga::times"
@@ -35,8 +36,9 @@ const resetTimes = () => {
       badge: "https://tse1.mm.bing.net/th/id/OIP.LMOAYurYCi2q9nmSLQqVIAHaHa?pid=Api&P=0&h=180",
       dataTime: {
         games: 5850,
-        victories: 2830,
-        defeats: 1780,
+        victories: 3105,
+        draws: 1576,
+        defeats: 1567,
         goalsScored: 9700,
         goalsConceded: 7800
       }
@@ -51,8 +53,9 @@ const resetTimes = () => {
       badge: "https://tse4.mm.bing.net/th/id/OIP.o8sjkU0ruMxq6E326AJzsQHaJB?pid=Api&P=0&h=180",
       dataTime: {
         games: 6000,
-        victories: 3100,
-        defeats: 1600,
+        victories: 3570,
+        draws: 1568,
+        defeats: 1567,
         goalsScored: 10500,
         goalsConceded: 7600
       }
@@ -67,8 +70,9 @@ const resetTimes = () => {
       badge: "https://tse3.mm.bing.net/th/id/OIP.UpSijRN-ylVVdEXX4ODzUwHaHx?pid=Api&P=0&h=180",
       dataTime: {
         games: 5900,
-        victories: 3000,
-        defeats: 1650,
+        victories: 3105,
+         draws: 1395,
+        defeats: 1550,
         goalsScored: 12300,
         goalsConceded: 7900
       }
@@ -126,12 +130,7 @@ const getMostByField = (times, field) => {
   return times.reduce((acc, team) => team.dataTime[field] > (acc?.dataTime[field] || 0) ? team : acc,null)} 
 
 
-
-
-
-
-
-        
+  
      return {
     // Persistência
     loadTimes,
