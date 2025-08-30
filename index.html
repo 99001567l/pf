@@ -55,9 +55,9 @@
     ul.menu li a.active { background-color:#04AA6D; }
   
     /* ============= Fim do menu ============*/
+
  
     /* ============= Container principal ============*/
-
    .container {
       max-width: 1200px;
       margin: 100px auto;
@@ -67,6 +67,7 @@
       text-align: center;      
     } 
     /* ============= Fim do container principal ============*/
+
 
     /* ============= Inicio do formulario de cadastro ============*/
 
@@ -100,6 +101,7 @@
       font-size: 15px;
     }
     /* ============= Fim do formulario de cadastro ============*/
+
     
     /* ============= Inicio da separação por serção ============*/
     section { 
@@ -110,6 +112,7 @@
        display: block;
     }
     /* ============= fim da separação por serção ============*/
+    
 
     /* ============= Inicio dos cards dos times ============*/
     
@@ -187,11 +190,11 @@
 
 
 
-/* ======================== */
-/* ESTILOS DO MODAL         */
-/* ======================== */
+/* ============= Inicio do formulario de atualização ============*/
+
+/*Fundo*/
 .modal {
-  display: none; /* Escondido por padrão */
+  display: none; 
   position: fixed;
   z-index: 2000;
   left: 0;
@@ -199,11 +202,12 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
+/* Conteine do formulario*/
 .modal-content {
-  background-color: #222; /* Fundo escuro para o formulário */
+  background-color: #222;
   margin: 10% auto;
   padding: 20px;
   border: 1px solid #888;
@@ -213,6 +217,7 @@
   position: relative;
 }
 
+/* Botão para fechar*/
 .close-button {
   color: #aaa;
   position: absolute;
@@ -223,46 +228,51 @@
   cursor: pointer;
 }
 
-.close-button:hover,
-.close-button:focus {
-  color: white;
-}
-   
-/* =================================== */
-/* ESTILOS DOS DETALHES DO TIME        */
-/* =================================== */
+/*============= Fim do formulario de atualização ============*/
+
+
+/* ============= Inicio das estatiscas dos times ============*/ 
+
+/*Conteine principal*/   
 #team-details-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo em telas pequenas */
+  flex-wrap: wrap; 
   margin-top: 30px;
   gap: 20px;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
   padding: 20px;
   border-radius: 6px;
 }
-
+/* Texto da caixa*/
 #team-details-text {
-  flex: 1; /* Ocupa metade do espaço */
-  min-width: 280px; /* Largura mínima antes de quebrar a linha */
-  color: white;
+  flex: 1; 
+  min-width: 280px; 
+  color: rgb(255, 255, 255);
   text-align: left;
 }
 
+/*Distãncia dos textos*/
 #team-details-text h2 {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
+/*Tamanhos dos gráficos*/
 #team-charts-wrapper {
-  flex: 1; /* Ocupa a outra metade do espaço */
+  flex: 1; 
   display: flex;
   min-width: 280px;
   gap: 15px;
 }
 
-/* O chart-container nós já temos, mas garantimos que funcione aqui */
+/*Para funcionar o chart-container */
 #team-charts-wrapper .chart-container {
     width: 50%;
 }
+/* ============= Fim das estatiscas dos times ============*/
+
+/* ============= Inicio caixa de seleção de dados ============*/
+
+/*Caixa*/
 #select-criterio{
   background-color: rgba(255,255,255,0.1);
   color: white;
@@ -272,23 +282,28 @@
   cursor: pointer;
   font-size: 1em;
 }
+/*Cor de fundo e fonte*/
 #select-criterio option{
   background-color: #333;
-  color: white;
+  color:white;
 }
+
+/*Hover da caixa*/
 #select-criterio:hover{
   border-color: #04AA6D;
 }
+/* ============= Fim da caixa de seleção de dados ============*/
 
+/* ============= Inicio da página sobre nós ============*/
 
-
+/*Conteiner principal*/
 #sobre{
   color:white;
   text-align: center;
   padding: 20px;
 }
 
-/* Container para alinhar os cards */
+/* Aliamento dos intergrantes */
 .equipe-container {
  display: flex;
   flex-wrap: wrap; 
@@ -297,7 +312,7 @@
   margin-top: 40px;
 }
 
-/* Estilos para cada card individualmente */
+/* Estilo para cada intergrante*/
 .intergrante {
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -307,7 +322,7 @@
  
 }
 
-/* Estilos para a imagem de perfil */
+/* Estilos para a foto */
 .intergrante img {
   width: 120px;
   height: 120px;
@@ -317,18 +332,20 @@
   margin-bottom: 15px;
 }
 
-/* Estilos para os textos dentro do card */
+/* Estilo para o texto de cada intergrante */
 .intergrante h3 {
   color: white;
   margin: 0;
   font-size: 1.2em;
 }
-
+/*Descrição*/
 .intergrante p {
-  color: #ccc;
+  color: white;
   font-size: 0.9em;
   margin-top: 5px;
 }
+/* ============= Inicio da página sobre nós ============*/
+
   </style>
 </head>
 
@@ -343,7 +360,7 @@
 
   <div class="container">
 
-    <!-- Home -->
+    <!-------- Inicio home ---------->
     <section id="home" class="active">
 
       <h1>🏆 CRUD esporte</h1>
@@ -364,16 +381,15 @@
         </select>
     </div>
 </div>
-
 <div class="charts">
     <div class="chart-container">
         <canvas id="homeChart"></canvas>
     </div>
 </div>
-
     </section>
+    <!-------- Fim home ---------->
 
-    <!-- Times -->
+    <!-- Inicio Times -->
     <section id="times">
       <h1>⚽ Times</h1>
       <div id="team-cards" class="team-grid"></div>
@@ -391,8 +407,9 @@
           </div>
       </div>
     </section>
+    <!-- Fim Times -->
 
-    <!-- Cadastro -->
+    <!----------- Inicio cadastro ------------->
     <section id="cadastrar">
       <h1> 📝 Cadastrar time</h1>
      <form id="form-cadastrar">
@@ -426,15 +443,14 @@
         <label>Gols Contra:</label>
         <input type="number" id="timeGoalsConceded" placeholder="Ex: 7600" required>
 
-        <label>URL do escudo:</label>
-        <input type="text" id="timeBadge" placeholder="https://..." required><br><br>
-        
+      
         <br><br>
         <input type="submit" value="Cadastrar">
       </form>
     </section>
+    <!----------- Fim cadastro ------------->
 
-    <!-- Sobre -->
+    <!----------- Inicio sobre nós ------------->
     <section id="sobre">
 
       <h1>PROJETO AVALIATIVO DA DISCIPLINA DE PROGRAMAÇÃO FUNCIONAL</h1>
@@ -443,39 +459,34 @@
       <div class=" equipe-container">
 
         <div class="intergrante">
-          <img src="URL foto de Bruno" alt="foto de Bruno" >
-          <h3> Bruno</h3>
+          <img src="Bruno.jpg" alt="foto de Bruno" >
+          <h3> Bruno Almeida</h3>
           <P>Desenvolvedor</P>
         </div>
 
         <div class="intergrante">
-          <img src="URL foto de João" alt="foto de João" >
-          <h3> João</h3>
+          <img src="João.jpg" alt="foto de João" >
+          <h3> João Bittencourt</h3>
           <P>Desenvolvedor</P>
         </div>
 
         <div class="intergrante">
-          <img src="URL foto de Nathan" alt="foto de NATHAN" >
-          <h3> Nathan</h3>
+          <img src="Nathan.jpg" alt="foto de NATHAN" >
+          <h3> Nathan Ramirez</h3>
           <P>Desenvolvedor</P>
           </div>
 
         <div class="intergrante">
-          <img src="URL foto de Lucas" alt="foto de Lucas" >
-          <h3> Lucas Thiery</h3>
+          <img src="Lucas Thiery.jpg" alt="foto de Lucas" >
+          <h3> Lucas Thiery santos</h3>
           <P>Desenvolvedor</P>
         </div>
 
       </div>
     </section>
+    <!----------- Fim sobre nós ------------->
 
-
-  
-
-<script src="libTeams.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="uiTeams.js"></script>
-
+<!----------- Inicio formulario de cadastro ------------->
 <div id="edit-modal" class="modal">
   <div class="modal-content">
     <span class="close-button">&times;</span>
@@ -513,14 +524,19 @@
       <label>Gols Contra:</label>
       <input type="number" id="update-timeGoalsConceded" required>
 
-      <label>URL do escudo:</label>
-      <input type="text" id="update-teamBadge" required>
       
       <br><br>
       <input type="submit" value="Salvar Alterações">
     </form>
   </div>
 </div>
+<!----------- Final formulario de cadastro ------------->
+
+
+
+<script src="libTeams.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="uiTeams.js"></script>
 
 </body>
 </html>
