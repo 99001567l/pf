@@ -8,11 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sections = document.querySelectorAll("section");
   const menuLinks = document.querySelectorAll(".menu li a");
 
-  // ==========================================================
-// ========== INÍCIO DO NOVO CÓDIGO PARA COLAR ==========
-// ==========================================================
-
-  // Seletores da Home (MODIFICADO)
+  // Seletores da Home 
   const ctxHome = document.getElementById("homeChart").getContext("2d");
   const selectCriterio = document.getElementById("select-criterio");
   const selectOrdem = document.getElementById("select-ordem");
@@ -25,12 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Seletores do formulário
   const formCadastrar = document.getElementById("form-cadastrar");
 
-  // Estado dos gráficos (MODIFICADO)
+  // Estado dos gráficos
   let homeChart;
 
-  // ===============================
-  // Helpers
-  // ===============================
+  
+  // ============= Helpers ===============
+
   const loadData = () => {
     let times = soccer.loadTimes();
     if (times.length === 0) {
@@ -40,20 +36,17 @@ document.addEventListener("DOMContentLoaded", () => {
     return times;
   };
 
-  // A função clearCharts foi removida por não ser mais necessária aqui.
+  // ============== Renderização da Home =======================
 
-  // ===============================
-  // Renderização da Home (NOVA VERSÃO)
-  // ===============================
   const updateHomeChart = () => {
-    // 1. Pega os valores selecionados pelo usuário
+    //Pega os valores selecionados pelo usuário
     const criterio = selectCriterio.value;
     const ordem = selectOrdem.value;
 
-    // 2. Carrega os dados dos times
+    //Carrega os dados dos times
     let times = loadData();
 
-    // 3. Ordena o array de times de acordo com a seleção
+    //Ordena o array de times de acordo com a seleção
     times.sort((a, b) => {
         let valueA, valueB;
 
@@ -66,16 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
             valueA = a.dataTime[criterio];
             valueB = b.dataTime[criterio];
         }
-
-        // Faz a ordenação: maior para menor (desc) ou menor para maior (asc)
-        if (ordem === 'desc') {
-            return valueB - valueA;
-        } else {
-            return valueA - valueB;
-        }
     });
 
-    // 4. Prepara os dados para o gráfico após a ordenação
+    //Prepara os dados para o gráfico após a ordenação
     const labels = times.map(t => t.name);
     const data = times.map(t => {
         if (criterio === "goalDifference") {
@@ -87,12 +73,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Pega o texto da opção selecionada para usar como título do gráfico
     const chartLabel = selectCriterio.options[selectCriterio.selectedIndex].text;
 
-    // 5. Destrói o gráfico antigo, se ele existir, para desenhar um novo
+    //Destrói o gráfico antigo, se ele existir, para desenhar um novo
     if (homeChart) {
         homeChart.destroy();
     }
 
-    // 6. Cria o novo gráfico
+    //Cria o novo gráfico
     homeChart = new Chart(ctxHome, {
         type: "bar", // O tipo ainda é 'bar'
         data: {
@@ -104,40 +90,35 @@ document.addEventListener("DOMContentLoaded", () => {
             }]
         },
         options: {
-            // ESTA É A MÁGICA PARA O GRÁFICO FICAR NA HORIZONTAL
             indexAxis: 'y', 
-            
             plugins: {
                 legend: {
                     labels: {
                         color: "white",
-                        font: { size: 15, weight: "bold" }
+                        font: { size: 15,
+                                weight: "bold" }
                     }
                 }
             },
             scales: {
                 x: {
-                    ticks: { color: "white", font: { size: 15 } }
+                    ticks: { color: "white",
+                     font: { size: 15
+                     }}
                 },
                 y: {
-                    ticks: { color: "white", font: { size: 15 } }
+                    ticks: { color: "white",
+                       font: { size: 15 
+
+                       }}
                 }
             }
         }
     });
   };
-
-// ==========================================================
-// ========== FIM DO NOVO CÓDIGO PARA COLAR ==========
-// ==========================================================
   
-  // ===============================
-  // Renderização de um time específico
-  // ===============================
- // ===============================
-  // Renderização dos DETALHES de um time (NOVA VERSÃO)
-  // ===============================
-  let chartTeamResults, chartTeamGoals; // Variáveis para os novos gráficos
+ // ==================== Renderização dos DETALHES de um time ===============================
+  let chartTeamResults, chartTeamGoals;
 
   const renderTeamDetails = (teamId) => {
     const times = loadData();
@@ -207,9 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // ===============================
-  // Renderização dos cards de times
-  // ===============================
+  // ========================= Renderização dos cards de times ==========================
   const renderTeamCards = () => {
     const times = loadData();
     const modal = document.getElementById("edit-modal");
@@ -231,9 +210,10 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
 
-      // --- LÓGICA DO BOTÃO ATUALIZAR (MODIFICADA) ---
+      // ------ LÓGICA DO BOTÃO ATUALIZAR ------
+      // Formulário do modal com os dados atuais do time
       card.querySelector(".update").addEventListener("click", () => {
-        // Preenche o formulário do modal com os dados atuais do time
+        // Formulário do modal com os dados atuais do time
         document.getElementById("update-team-id").value = team.id;
         document.getElementById("update-timeName").value = team.name;
         document.getElementById("update-timeFoundation").value = team.foundation;
@@ -250,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.style.display = "block";
       });
 
-      // --- LÓGICA DO BOTÃO DELETAR (SEM MUDANÇAS) ---
+      // --- LÓGICA DO BOTÃO DELETAR ---
       card.querySelector(".delete").addEventListener("click", () => {
         if (!confirm(`Deseja deletar o time ${team.name}?`)) return;
         const updatedTimes = soccer.deleteTime(loadData(), team.id);
@@ -261,8 +241,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (chartTeamBalance) chartTeamBalance.destroy();
       });
 
+      // Impede que o clique nos botões dispare este evento
       card.addEventListener("click", (e) => {
-        // Impede que o clique nos botões dispare este evento
         if (e.target.classList.contains('btn')) return;
         renderTeamDetails(team.id);
       });
@@ -270,9 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-// ===============================
-  // Lógica do Modal de Edição
-  // ===============================
+// ======================= Lógica do Modal de Edição ==========================
   const modal = document.getElementById("edit-modal");
   const updateForm = document.getElementById("form-update");
   const closeButton = document.querySelector(".close-button");
@@ -308,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
         victories: victories,
         draws: draws,
         defeats: defeats,
-        games: victories + draws + defeats, // Recalcula os jogos
+        games: victories + draws + defeats,
         goalsScored: parseInt(document.getElementById("update-timeGoalsScored").value),
         goalsConceded: parseInt(document.getElementById("update-timeGoalsConceded").value)
       }
@@ -330,8 +308,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
  
-// Cadastro de Time (VERSÃO 100% CORRETA E FUNCIONAL)
-// ===============================
+// ================ Cadastro de Time ===============
+
 
 formCadastrar.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -370,13 +348,13 @@ formCadastrar.addEventListener("submit", async (e) => {
       logoUrl = logoData.response.url;
     }
 
-    // ========= MUDANÇA AQUI: LENDO OS NOVOS DADOS DO FORMULÁRIO =========
+    // ========= Leitura dos dados do formulario =========
     const victories = parseInt(document.getElementById("timeVictories").value, 10);
     const defeats = parseInt(document.getElementById("timeDefeats").value, 10);
     const draws = parseInt(document.getElementById("timeDraws").value, 10)
     const goalsScored = parseInt(document.getElementById("timeGoalsScored").value, 10);
     const goalsConceded = parseInt(document.getElementById("timeGoalsConceded").value, 10);
-    const games = victories + defeats + draws; // Calculamos o total de jogos
+    const games = victories + defeats + draws;
 
     const times = loadData();
     const newTime = {
@@ -386,7 +364,6 @@ formCadastrar.addEventListener("submit", async (e) => {
       bestPlayer: document.getElementById("timeBestPlayer").value,
       color: document.getElementById("timeColor").value,
       badge: logoUrl,
-      // Usando os dados do formulário em vez de valores zerados
       dataTime: { 
         games: games, 
         victories: victories, 
@@ -414,17 +391,12 @@ formCadastrar.addEventListener("submit", async (e) => {
   }
 });
 
-  // ===============================
-  // <-- LINHAS NOVAS ADICIONADAS AQUI
-  // Conectam os menus de seleção à função que atualiza o gráfico
-  // ===============================
+  // =============================== Conexão do menu à função que atualiza o gráfico ===============================
   selectCriterio.addEventListener("change", updateHomeChart);
   selectOrdem.addEventListener("change", updateHomeChart);
 
 
-  // ===============================
-  // Navegação do Menu
-  // ===============================
+  // ====================== Navegação do Menu ========================
   menuLinks.forEach(link => {
     link.addEventListener("click", () => {
       const sectionId = link.getAttribute("data-section");
@@ -435,7 +407,6 @@ formCadastrar.addEventListener("submit", async (e) => {
       sections.forEach(sec => sec.classList.remove("active"));
       document.getElementById(sectionId).classList.add("active");
 
-      // <-- MUDANÇA AQUI: Chamando a nova função quando o usuário clica em "Home"
       if (sectionId === "home") updateHomeChart(); 
       
       if (sectionId === "times") {
@@ -446,10 +417,7 @@ formCadastrar.addEventListener("submit", async (e) => {
     });
   });
 
-  // ===============================
-  // Inicialização
-  // ===============================
-  // <-- MUDANÇA AQUI: Chamando a nova função quando a página carrega
+  // =============== Inicialização ====================
   updateHomeChart(); 
   renderTeamCards();
 
