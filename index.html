@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>              
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Times</title>
+
+  <style> 
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    /* Fundo e cor do texto */
+    body { 
+      background: url(fundo.png) no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+
+    /* Menu */
+    ul.menu {
+      border-radius: 10px;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    /* Itens do menu */
+    ul.menu li { float: left; }
+
+    /* Links do menu */
+    ul.menu li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+    /* Efeito hover e ativo */
+    ul.menu li a:hover { background-color: #111; }
+    ul.menu li a.active { background-color:#04AA6D; }
+ 
+    /* Container principal */
+    .container {
+      max-width: 100%;
+      margin: 100px ;
+      padding: 20px 20px 20px 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 6px;
+      text-align: center;
+    } 
+
+    /* Formulário */
+    form { 
+
+      margin-top: 10px; }
+
+    form label { 
+      display: block; 
+      text-align: left; 
+      margin-top: 10px; }
+      
+    input { 
+      padding: 10px; 
+      margin-top: 10px; 
+      width: 100%;
+    border-radius: 6px; }
+    
+    input[type="submit"] {
+      background-color: #04aa6d;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    /* Seções */
+    section { display: none; }
+    section.active { display: block; }
+
+    /* Cards de times */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    /* Estilização dos cards */
+    .team-card {
+      background: rgba(255,255,255,0.7);
+      border-radius: 6px;
+      text-align: center;
+      padding: 15px;
+      color: black;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    /* Efeito hover nos cards */
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Logo do time */
+    .team-logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    /* Ações dos times */
+    .team-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      
+    }
+
+    /* Estilização dos botões */
+    .btn {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    /* Botões coloridos */
+    .btn.update { background: #3498db; }
+    .btn.update:hover { background: #2980b9; }
+    .btn.delete { background: #e74c3c; }
+    .btn.delete:hover { background: #c0392b; }
+
+    
+
+
+    /* Área dos gráficos */
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top:  20px;
+    }
+ /* Estilo dos gráficos */
+    .chart-container {
+     
+      padding: 20px;
+      border-radius: 6px;
+      color:black;
+    }
+
+canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+
+
+    
+  </style>
+</head>
+
+<body> 
+  <!--Menu-->
+  <ul class="menu">
+    <li><a href="#" data-section="home" class="active">Home</a></li>
+    <li><a href="#" data-section="times">Times</a></li>
+    <li><a href="#" data-section="cadastrar">Cadastrar time</a></li>
+    <li style="float:right"><a href="#" data-section="sobre">Sobre nós</a></li>
+  </ul>
+
+  <div class="container">
+
+    <!-- Home -->
+    <section id="home" class="active">
+      <h1>🏆 Estatísticas da Liga</h1>
+
+
+
+      <!-- Gráficos-->
+       <div class="charts">
+      <div class="chart-container">
+        <canvas id="chartVictories"></canvas>
+      </div>
+
+      <div class="chart-container">
+      <canvas id="chartDefeats"></canvas>
+      </div>
+
+      <div class="chart-container">
+      <canvas id="chartGoals"></canvas>
+      </div>
+      </div>
+    </section>
+
+    <!-- Times -->
+    <section id="times">
+      <h1>📋 Times</h1>
+      <div id="team-cards" class="team-grid"></div>
+      <div id="time-info"></div>
+      <canvas id="chartTeamBalance"></canvas>
+    </section>
+
+    <!-- Cadastro -->
+    <section id="cadastrar">
+      <h1> 📝 Cadastrar time</h1>
+      <form id="form-cadastrar">
+        <label>Nome do time:</label>
+        <input type="text" id="timeName" placeholder="Ex: Flamengo" required><br><br>
+        <label>Ano de fundação:</label>
+        <input type="number" id="timeFoundation" placeholder="Ex: 1981" required><br><br>
+        <label>Apelido:</label>
+        <input type="text" id="timeNickname" placeholder="Ex: Mengão" required><br><br>
+        <label>Maior ídolo:</label>
+        <input type="text" id="timeBestPlayer" placeholder="Ex: Zico" required><br><br>
+        <label>Cor:</label>
+        <input type="text" id="timeColor" placeholder="Ex: Vermelho e preto" required><br><br>
+        <label>URL do escudo:</label>
+        <input type="text" id="timeBadge" placeholder="https://..." required><br><br>
+        <input type="submit" value="Cadastrar">
+      </form>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre">
+      <h1>Sobre nós</h1>
+      <p>Trabalho da disciplina de Programação Funcional.</p>
+      <p>Equipe: ... (nomes e fotos)</p>
+    </section>
+
+  </div>
+
+<script src="libTeams.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="uiTeams.js"></script>
+</body>
+</html>
